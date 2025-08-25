@@ -1,27 +1,22 @@
 class Solution {
-
-    // Helper method to check palindrome in substring s[i..j]
-    public boolean isVal(String s, int i, int j) {
-        while (i < j) {
-            if (s.charAt(i++) != s.charAt(j--)) {
+    private boolean IsVal( String s , int i , int j ){
+        while(i<j){
+            if (s.charAt(i++) != s.charAt(j--) ){
                 return false;
             }
         }
-        return true; // must return true if no mismatches found
+        return true ;
     }
-
     public boolean validPalindrome(String s) {
-        int i = 0, j = s.length() - 1;
-
-        while (i < j) {
-            if (s.charAt(i) != s.charAt(j)) {
-                // try skipping either left or right char
-                return isVal(s, i + 1, j) || isVal(s, i, j - 1);
-            }
-            i++;
-            j--;
+      int i = 0 ;
+      int j = s.length()-1 ;
+      while(i<j){
+        if( s.charAt(i)!=s.charAt(j)){
+            return IsVal( s , i+1 , j ) || IsVal( s , i , j-1);
         }
-
-        return true;
+        i++;
+        j--;
+      } 
+      return true;
     }
 }
