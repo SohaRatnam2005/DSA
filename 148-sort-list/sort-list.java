@@ -1,67 +1,32 @@
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
+
 
 class Solution {
     
     public ListNode sortList(ListNode head) {
-        // Base case: if list is empty or has only one node
-        if (head == null || head.next == null) {
-            return head;
-        }
+    if (head == null) return null;
+      ListNode curr = head;
+      
+      int n = 0 ;
+      while(curr != null){
+        n++;
+        curr = curr.next ;
+      }
+      int[] arr = new int[n];
+      curr = head ;
+      for(int i = 0 ; i < n ; i++ ){
+        arr[i]= curr.val ;
+        curr = curr.next ;
+      }
 
-        // Step 1: Split the list into two halves
-        ListNode mid = getMid(head);
-        ListNode rightHead = mid.next;
-        mid.next = null;  // break the list into two halves
+      Arrays.sort(arr);
 
-        // Step 2: Sort each half recursively
-        ListNode left = sortList(head);
-        ListNode right = sortList(rightHead);
+      ListNode dummy = new ListNode(0);
+      ListNode temp = dummy ;
 
-        // Step 3: Merge the two sorted halves
-        return merge(left, right);
-    }
-
-    // Helper function to find middle of linked list
-    private ListNode getMid(ListNode head) {
-        ListNode slow = head;
-        ListNode fast = head.next;
-
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        return slow;  // slow will be at middle
-    }
-
-    // Helper function to merge two sorted linked lists
-    private ListNode merge(ListNode list1, ListNode list2) {
-        ListNode dummy = new ListNode(-1);
-        ListNode tail = dummy;
-
-        while (list1 != null && list2 != null) {
-            if (list1.val <= list2.val) {
-                tail.next = list1;
-                list1 = list1.next;
-            } else {
-                tail.next = list2;
-                list2 = list2.next;
-            }
-            tail = tail.next;
-        }
-
-        // Attach the remaining part
-        tail.next = (list1 != null) ? list1 : list2;
-
-        return dummy.next;
+      for(int val : arr ){
+        temp.next = new ListNode(val);
+        temp = temp.next;
+      }
+      return dummy.next ;
     }
 }
